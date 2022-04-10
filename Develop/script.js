@@ -34,14 +34,14 @@ function generatePassword () {
     generatePassword ();
   }
   // This is the variable for the amount of selected characters they want
-  let Count = "";
+  let Count = 0;
   // This is the variable for the selected characters they want
-  let RandomPassword = "";
+  let RandomPassword = [];
   // This will help decide how many of each character I want in the password which is supposed to be randomized
-  let minimumUpper = "";
-  let minimumLower = "";
-  let minimumNumber = "";
-  let minimumSymbol = "";
+  let minimumUpper = [];
+  let minimumLower = [];
+  let minimumNumber = [];
+  let minimumSymbol = [];
   const specialChars = "!@#$%^&*|~"
   const retrieveCharArrays = {
     getLowerCase: function () {
@@ -57,40 +57,39 @@ function generatePassword () {
       return specialChars[Math.floor(Math.random() * specialChars.length)]
     }
   }
-  if (LowerCase === true) {
-    minimumLower = retrieveCharArrays.getLowerCase();
-    console.log(minimumLower)
-    Count++;
-  }
-  if (UpperCase === true) {
-    minimumUpper = retrieveCharArrays.getUpperCase();
-    console.log(minimumUpper)
-    Count++;
-  }
-  if (Number === true) {
-    minimumNumber = retrieveCharArrays.getNumber();
-    console.log(minimumNumber)
-    Count++;
-  }
-  if (Symbol === true) {
-    minimumSymbol = retrieveCharArrays.getSymbol();
-    console.log(minimumSymbol)
-    Count++;
-  }
- 
-  // parseInt converts the string into an integer
-  // i is 0 and if 0 is less than the password length minus the minimum count then continue to iterate
-  for (let i = 0; i < (parseInt(passwordLength)-Count);i++) {
-    let randomNumberPicked = Math.floor(Math.random() * 4)
-    RandomPassword += randomNumberPicked
+  while ((parseInt(passwordLength) > Count)) {
+    if (LowerCase === true && Count < passwordLength) {
+      let getLower = retrieveCharArrays.getLowerCase();
+      minimumLower.push(getLower)
+      console.log(minimumLower)
+      Count++;
+    }
+    if (UpperCase === true && Count < passwordLength) {
+      let getUpper = retrieveCharArrays.getUpperCase();
+      minimumUpper.push(getUpper)
+      console.log(minimumUpper)
+      Count++;
+    }
+    if (Number === true && Count < passwordLength) {
+      let getNumber = retrieveCharArrays.getNumber();
+      minimumNumber.push(getNumber)
+      console.log(minimumNumber)
+      Count++;
+    }
+    if (Symbol === true && Count < passwordLength) {
+      let getSymbol = retrieveCharArrays.getSymbol();
+      minimumSymbol.push(getSymbol)
+      console.log(minimumSymbol)
+      Count++;
+    }
   }
   // this is adding the random characters types into the password
-  RandomPassword += minimumLower
-  RandomPassword += minimumNumber
-  RandomPassword += minimumSymbol
-  RandomPassword += minimumUpper
+  RandomPassword.push(minimumLower.join(""))
+  RandomPassword.push(minimumUpper.join(""))
+  RandomPassword.push(minimumNumber.join(""))
+  RandomPassword.push(minimumSymbol.join(""))
   let passwordDisplay = document.querySelector("#password")
   console.log(RandomPassword)
-  passwordDisplay.append(RandomPassword)
-  return RandomPassword
+  passwordDisplay.append(RandomPassword.join(""))
+  return RandomPassword;
 } 
